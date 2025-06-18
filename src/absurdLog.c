@@ -19,9 +19,15 @@ static const char* _apszLogLevelNames[] = {
  * @param _pszMessage Null-terminated message string.
  */
 void _AbsurdLog_LogMessage(_elLogLevel _elvlLevel, const char* _pszMessage) {
+    if (_pszMessage == NULL) {
+        _pszMessage = "(null)";
+    }
+
     if (_elvlLevel < _elLog_DEBUG || _elvlLevel > _elLog_FATAL) {
         // Invalid log level, fallback to INFO
         _elvlLevel = _elLog_INFO;
     }
-    printf("[AbsurdLog::%s] %s\n", _apszLogLevelNames[_elvlLevel], _pszMessage);
+
+    FILE* output = (_elvlLevel >= _elLog_WARN) ? stderr : stdout;
+    fprintf(output, "[AbsurdLog::%s] %s\n", _apszLogLevelNames[_elvlLevel], _pszMessage);
 }

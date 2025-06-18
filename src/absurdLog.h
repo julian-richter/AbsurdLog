@@ -1,5 +1,5 @@
-#ifndef _ABSURD_LOG_H
-#define _ABSURD_LOG_H
+#ifndef ABSURD_LOG_H
+#define ABSURD_LOG_H
 
 /**
  * @brief Enum representing log levels with Hungarian notation.
@@ -12,6 +12,10 @@ typedef enum _elLogLevel {
     _elLog_FATAL    /**< Fatal error level */
 } _elLogLevel;
 
+// Compile-time check to ensure enum count matches array size
+_Static_assert(sizeof(_apszLogLevelNames) / sizeof(_apszLogLevelNames[0]) == _elLog_COUNT,
+               "_apszLogLevelNames must match _elLogLevel enum count");
+
 /**
  * @brief Logs a message with the given log level.
  *
@@ -20,4 +24,4 @@ typedef enum _elLogLevel {
  */
 void _AbsurdLog_LogMessage(_elLogLevel _elvlLevel, const char* _pszMessage);
 
-#endif // _ABSURD_LOG_H
+#endif // ABSURD_LOG_H
