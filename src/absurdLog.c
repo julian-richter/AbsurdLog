@@ -27,7 +27,7 @@ void _AbsurdLog_LogMessage(_elLogLevel _elvlLevel, const char* _pszMessage) {
         _pszMessage = "(null)";
     }
 
-    if (_elvlLevel < _elLog_DEBUG || _elvlLevel > _elLog_FATAL) {
+    if (_elvlLevel < _elLog_DEBUG || _elvlLevel >= _elLog_COUNT) {
         // Invalid log level, fallback to INFO
         _elvlLevel = _elLog_INFO;
     }
