@@ -12,6 +12,10 @@ static const char* _apszLogLevelNames[] = {
     "FATAL"
 };
 
+// Compile-time check to ensure enum count matches array size
+_Static_assert(sizeof(_apszLogLevelNames) / sizeof(_apszLogLevelNames[0]) == _elLog_COUNT,
+               "_apszLogLevelNames must match _elLogLevel enum count");
+
 /**
  * @brief Logs a message with a level prefix.
  *

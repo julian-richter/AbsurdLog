@@ -9,12 +9,9 @@ typedef enum _elLogLevel {
     _elLog_INFO,    /**< Informational level */
     _elLog_WARN,    /**< Warning level */
     _elLog_ERROR,   /**< Error level */
-    _elLog_FATAL    /**< Fatal error level */
+    _elLog_FATAL,   /**< Fatal error level */
+    _elLog_COUNT    /**< The number of log levels. */
 } _elLogLevel;
-
-// Compile-time check to ensure enum count matches array size
-_Static_assert(sizeof(_apszLogLevelNames) / sizeof(_apszLogLevelNames[0]) == _elLog_COUNT,
-               "_apszLogLevelNames must match _elLogLevel enum count");
 
 /**
  * @brief Logs a message with the given log level.
