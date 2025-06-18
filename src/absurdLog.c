@@ -12,6 +12,17 @@ static const char* _apszLogLevelNames[] = {
     "FATAL"
 };
 
+/**
+ * @brief Array of ANSI color codes for each log level.
+ */
+static const char* _apszLogLevelColors[] = {
+    "\x1b[95m", // DEBUG (Bright Magenta for "neon pink")
+    "\x1b[34m", // INFO (Blue)
+    "\x1b[33m", // WARN (Yellow)
+    "\x1b[31m", // ERROR (Red)
+    "\x1b[4;31m"// FATAL (Underlined Red)
+};
+
 // Compile-time check to ensure enum count matches array size
 _Static_assert(sizeof(_apszLogLevelNames) / sizeof(_apszLogLevelNames[0]) == _elLog_COUNT,
                "_apszLogLevelNames must match _elLogLevel enum count");
@@ -33,5 +44,5 @@ void _AbsurdLog_LogMessage(_elLogLevel _elvlLevel, const char* _pszMessage) {
     }
 
     FILE* output = (_elvlLevel >= _elLog_WARN) ? stderr : stdout;
-    fprintf(output, "[AbsurdLog::%s] %s\n", _apszLogLevelNames[_elvlLevel], _pszMessage);
+    fprintf(output, "%s[AbsurdLog::%s] %s\x1b[0m\n", _apszLogLevelColors[_elvlLevel], _apszLogLevelNames[_elvlLevel], _pszMessage);
 }
