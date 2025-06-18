@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <unistd.h> // For isatty()
 #include "absurdLog.h"
 
 /**
@@ -26,6 +27,8 @@ static const char* _apszLogLevelColors[] = {
 // Compile-time check to ensure enum count matches array size
 _Static_assert(sizeof(_apszLogLevelNames) / sizeof(_apszLogLevelNames[0]) == _elLog_COUNT,
                "_apszLogLevelNames must match _elLogLevel enum count");
+_Static_assert(sizeof(_apszLogLevelColors) / sizeof(_apszLogLevelColors[0]) == _elLog_COUNT,
+               "_apszLogLevelColors must match _elLogLevel enum count");
 
 /**
  * @brief Logs a message with a level prefix.
@@ -44,5 +47,11 @@ void _AbsurdLog_LogMessage(_elLogLevel _elvlLevel, const char* _pszMessage) {
     }
 
     FILE* output = (_elvlLevel >= _elLog_WARN) ? stderr : stdout;
-    fprintf(output, "%s[AbsurdLog::%s] %s\x1b[0m\n", _apszLogLevelColors[_elvlLevel], _apszLogLevelNames[_elvlLevel], _pszMessage);
+
+    // Only use color codes if the output is a terminal
+    if (isatty(fileno(output))) {
+        fprintf(output, "%s[AbsurdLog::%s] %s\x1b[0m\n", _apszLogLevelColors[_elvlLevel], _apszLogLevelNames[_elvlLevel], _pszMessage);
+    } else {
+        fprintf(output, "[AbsurdLog::%s] %s\n", _apszLogLevelNames[_elvlLevel], _pszMessage);
+    }
 }
