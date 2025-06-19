@@ -15,6 +15,5 @@ int main(void) {
 
     // Log a fatal error message
     _AbsurdLog_LogMessage(_elLog_FATAL, "This is a fatal error message.");
-
     return 0;
 }
